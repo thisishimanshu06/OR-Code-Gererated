@@ -1,0 +1,104 @@
+body {
+    width: 100%;
+    height: 100vh;
+    /* FIX 1: Was two URLs accidentally joined — now one clean URL */
+    background-image: url('https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1420&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D://images.unsplash.com/photo-1510906594845-bc082582c8cc?q=80&w=1444&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+}
+
+.container {
+    width: 500px;
+    padding: 25px 35px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(103, 212, 255);
+    border-radius: 10px;
+    opacity: 0.9;
+}
+
+.container p {
+    font-weight: 600;
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin-bottom: 8px;
+    color: #fff;
+}
+
+.container input {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #F77F00;
+    outline: 0;
+    padding: 10px;
+    margin: 10px 0 20px;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.container button {
+    width: 100%;
+    height: 50px;
+    background: #F77F00;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+/* FIX 2: Widened imgBox to match QR size (was 200px, now 250px) */
+#imgBox {
+    width: 250px;
+    border-radius: 6px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease;
+    background: #fff;
+}
+
+/* FIX 3: Removed height: 100% — it was forcing the image to
+   stretch to fill max-height instead of keeping its square shape */
+#imgBox img {
+    width: 100%;
+    display: block;       /* removes bottom gap under image */
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+#imgBox.show-img {
+    /* FIX 4: max-height must fit image (250px) + padding (24px) = 274px */
+    max-height: 280px;
+    margin: 10px auto;
+    border: 1px solid #d1d1d1;
+}
+
+/* FIX 5: Loader styling */
+#loader {
+    color: #08614e;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    padding: 20px;
+    letter-spacing: 0.5px;
+}
+
+.error {
+    animation: shake 0.1s linear 10;
+    border-color: red !important;
+}
+
+@keyframes shake {
+    0%   { transform: translateX(0);   }
+    25%  { transform: translateX(-2px);}
+    50%  { transform: translateX(0);   }
+    75%  { transform: translateX(2px); }
+    100% { transform: translateX(0);   }
+}

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <p>Enter Your URL</p>
+        <input type="text" placeholder="Enter Text OR URL" id="qrText">
+        <div id="imgBox">
+            <!-- FIX 3: Added loading spinner -->
+            <div id="loader" style="display:none;">Generating...</div>
+            <img src="" id="qrImage" alt="QR Code">
+        </div>
+
+        <button onclick="generateQR()">GENERATE QR CODE</button>
+    </div>
+
+    <script>
+        let imgBox  = document.getElementById("imgBox");
+        let qrImage = document.getElementById("qrImage");
+        let qrText  = document.getElementById("qrText");
+        let loader  = document.getElementById("loader");
+
+        function generateQR() {
+            if (qrText.value.trim().length > 0) {
+
+                // FIX 1: Hide image and show loader while QR is being fetched
+                qrImage.style.display = "none";
+                loader.style.display  = "block";
+                imgBox.classList.add("show-img");
+                qrText.classList.remove("error");
+
+                // FIX 2: Increased size from 150x150 → 300x300 for crisp rendering
+                qrImage.src = "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data="
+                              + encodeURIComponent(qrText.value);
+
+                // FIX 3: Only show image AFTER it has fully loaded
+                qrImage.onload = function () {
+                    loader.style.display  = "none";
+                    qrImage.style.display = "block";
+                };
+
+                // FIX 4: Handle network/API errors gracefully
+                qrImage.onerror = function () {
+                    loader.style.display  = "none";
+                    loader.innerText      = "Failed to load QR. Try again.";
+                    loader.style.display  = "block";
+                };
+
+            } else {
+                qrText.classList.add("error");
+                setTimeout(() => {
+                    qrText.classList.remove("error");
+                }, 1500);
+            }
+        }
+
+        // Press Enter to generate
+        qrText.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") generateQR();
+        });
+    </script>
+</body>
+</html>
